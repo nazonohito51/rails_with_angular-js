@@ -44,3 +44,8 @@ group :development, :test do
   gem 'spring'
 end
 
+# rails version over 4.1.0 is not running on windows!
+gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw]
+
+# coffee-script-source version over 1.9.0 is not running on windows!
+gem 'coffee-script-source', '1.8.0'
