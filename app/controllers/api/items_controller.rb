@@ -4,7 +4,7 @@ class Api::ItemsController < ApplicationController
   # GET /items
   # GET /items.json
   def index
-    @items = Item.all
+    @items = Item.search(params[:on_sale])
 
     respond_to do |format|
       format.html
@@ -74,6 +74,6 @@ class Api::ItemsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def item_params
-      params.require(:item).permit(:name, :price)
+      params.require(:item).permit(:name, :price, :on_sale)
     end
 end

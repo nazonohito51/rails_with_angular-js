@@ -23,7 +23,10 @@ app.config ($httpProvider) ->
 app.factory "itemFactory", ["$resource", ($resource) ->
   return $resource "/api/items/:id.json",
     { id: '@id' },
-    {}
+    {
+      update: { method: 'PATCH' },
+      query_on_sale: { method: "GET", isArray: true, params: { on_sale: true } }
+    }
 ]
 
 app.value "cart", []
@@ -43,10 +46,24 @@ app.controller "itemsCtrl", ($scope, $http, itemFactory) ->
     $scope.new_item = new itemFactory()
 
   $scope.deleteItem = (index) ->
-    $scope.items.splice(index, 1)
+    $scope.items[index].$delete(
+      (res)->
+        alert("商品の削除に成功しました。")
+      ,(res)->
+        alert("商品の削除に失敗しました。")
+    )
+    $scope.items = itemFactory.query()
+
+  $scope.changeOnSale = (index) ->
+    $scope.items[index].$update(
+      (res)->
+        alert("商品の更新に成功しました。")
+      ,(res)->
+        alert("商品の更新に失敗しました。")
+    )
 
 app.controller "onSaleCtrl", ($scope, $http, itemFactory, cart) ->
-  $scope.items = itemFactory.query()
+  $scope.items = itemFactory.query_on_sale()
   $scope.new_item = new itemFactory()
   $scope.cart = cart
 

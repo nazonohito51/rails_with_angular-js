@@ -3,10 +3,13 @@
 
   table
     tr
+      th 商品掲載
       th 商品名
       th 単価
       th
     tr ng-repeat="item in items"
+      td
+        = check_box_tag :on_sale, true, false, { "ng-model" => "item.on_sale", "ng-change" => "changeOnSale($index)" }
       td
         | {{item.name}}
       td
@@ -14,6 +17,7 @@
       td
         = link_to "削除", "", "ng-click" => "deleteItem($index)"
     tr
+      td
       td
         = text_field_tag :name, "", "ng-model" => "new_item.name"
       td

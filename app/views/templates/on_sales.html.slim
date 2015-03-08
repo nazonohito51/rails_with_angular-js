@@ -11,7 +11,7 @@
       td
         | {{item.name}}
       td
-        | {{item.price}}
+        | ￥{{item.price | number}}
       td
         = number_field_tag :quantity, nil, { "ng-model" => "item.quantity" }
       td
