@@ -21,7 +21,7 @@ app.config ($httpProvider) ->
   $httpProvider.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest"
 
 app.factory "itemFactory", ["$resource", ($resource) ->
-  return $resource "/items/:id.json",
+  return $resource "/api/items/:id.json",
     { id: '@id' },
     {}
 ]
