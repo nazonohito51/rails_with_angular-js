@@ -18,7 +18,8 @@
       td
         = number_field_tag :quantity, nil, { "ng-model" => "item.quantity" }
       td
-        = link_to "カートに入れる", "", "ng-click" => "insertCart(item)"
+        = link_to "カートに入れる", "", "ng-click" => "insertCart($index)"
+        /= link_to "編集", "{{purchase_order_header.links.edit_url}}", :class => "btn btn-primary btn-xs"
 
   hr
 

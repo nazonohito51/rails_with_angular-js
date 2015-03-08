@@ -4,15 +4,12 @@ app = angular.module(appName, ["ngRoute", "ngResource"])
 app.config ($routeProvider, $locationProvider) ->
   $routeProvider.when "/",
     redirectTo:  "/items"
-
   $routeProvider.when "/cart",
     templateUrl: "/templates/cart.html",
     controller: "cartCtrl"
-
   $routeProvider.when "/items",
     templateUrl: "/templates/items.html",
     controller: "itemCtrl"
-
   $locationProvider.html5Mode(true)
 
 app.config ($httpProvider) ->
@@ -42,18 +39,19 @@ app.controller "itemCtrl", ($scope, $http, itemFactory, cart) ->
     )
     $scope.items = itemFactory.query()
 
-  $scope.insertCart = (item) ->
-    if item.quantity > 0
-      $scope.cart.push(item)
+  $scope.insertCart = (index) ->
+    console.log($scope.items[index])
+    if $scope.items[index].quantity > 0
+      $scope.cart.push($scope.items[index])
     else
       alert("数量を入力してください。")
 
 app.controller "cartCtrl", ($scope, $http, cart) ->
   $scope.cart = cart
 
-  $scope.removeCart = (id) ->
-    for item, index in $scope.cart
-      $scope.cart.splice(index, 1) if item.id == id
+  $scope.removeCart = (index) ->
+    console.log($scope.cart[index])
+    $scope.cart.splice(index, 1)
 
   $scope.getAmount = ->
     amount = 0

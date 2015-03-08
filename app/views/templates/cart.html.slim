@@ -20,7 +20,7 @@ div class="container"
       td
         | {{item.price * item.quantity | currency}}
       td
-        = link_to "カートから削除", "", "ng-click" => "removeCart({{item.id}})"
+        = link_to "カートから削除", "", "ng-click" => "removeCart($index)"
         /= link_to "編集", "{{purchase_order_header.links.edit_url}}", :class => "btn btn-primary btn-xs"
     tr
       td 合計
