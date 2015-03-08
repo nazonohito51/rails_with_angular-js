@@ -55,6 +55,9 @@ group :development, :test do
   gem 'spring'
 end
 
+# output rails log to STDOUT for Heroku logs
+gem 'rails_12factor', group: :production
+
 # rails version over 4.1.0 is not running on windows!
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw]
 
