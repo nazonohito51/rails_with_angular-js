@@ -4,12 +4,15 @@ app = angular.module(appName, ["ngRoute", "ngResource"])
 app.config ($routeProvider, $locationProvider) ->
   $routeProvider.when "/",
     redirectTo:  "/items"
+  $routeProvider.when "/items",
+    templateUrl: "templates/items.html",
+    controller: "itemsCtrl"
+  $routeProvider.when "/on_sales",
+    templateUrl: "/templates/on_sales.html",
+    controller: "onSaleCtrl"
   $routeProvider.when "/cart",
     templateUrl: "/templates/cart.html",
     controller: "cartCtrl"
-  $routeProvider.when "/items",
-    templateUrl: "/templates/items.html",
-    controller: "itemCtrl"
   $locationProvider.html5Mode(true)
 
 app.config ($httpProvider) ->
@@ -25,7 +28,10 @@ app.factory "itemFactory", ["$resource", ($resource) ->
 
 app.value "cart", []
 
-app.controller "itemCtrl", ($scope, $http, itemFactory, cart) ->
+app.controller "itemsCtrl", ($scope, $http, itemFactory) ->
+  $scope.test_value = "this is items ctrl"
+
+app.controller "onSaleCtrl", ($scope, $http, itemFactory, cart) ->
   $scope.items = itemFactory.query()
   $scope.new_item = new itemFactory()
   $scope.cart = cart
