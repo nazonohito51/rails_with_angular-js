@@ -1,15 +1,12 @@
 .container
-  h1 商品一覧
-  | {{items}}
+  h1 掲載商品一覧
 
   table
     tr
       th 商品名
       th 単価
+      th 数量
       th
-        | 数量
-      th
-        / 詳細、編集ボタン
     tr ng-repeat="item in items"
       td
         | {{item.name}}
@@ -20,20 +17,3 @@
       td
         = link_to "カートに入れる", "", "ng-click" => "insertCart($index)"
         /= link_to "編集", "{{purchase_order_header.links.edit_url}}", :class => "btn btn-primary btn-xs"
-
-  hr
-
-  h3 商品新規登録
-  table
-    tr
-      th 商品名
-      td
-        = text_field_tag :price, "", "ng-model" => "new_item.name"
-    tr
-      th 単価
-      td
-        = text_field_tag :name, "", "ng-model" => "new_item.price"
-    tr
-      th
-      td
-        = link_to("登録", "", "ng-click" => "createItem()")

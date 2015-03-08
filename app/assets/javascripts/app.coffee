@@ -29,12 +29,8 @@ app.factory "itemFactory", ["$resource", ($resource) ->
 app.value "cart", []
 
 app.controller "itemsCtrl", ($scope, $http, itemFactory) ->
-  $scope.test_value = "this is items ctrl"
-
-app.controller "onSaleCtrl", ($scope, $http, itemFactory, cart) ->
   $scope.items = itemFactory.query()
   $scope.new_item = new itemFactory()
-  $scope.cart = cart
 
   $scope.createItem = ->
     $scope.new_item.$save(
@@ -44,6 +40,15 @@ app.controller "onSaleCtrl", ($scope, $http, itemFactory, cart) ->
         alert("商品の登録に失敗しました。")
     )
     $scope.items = itemFactory.query()
+    $scope.new_item = new itemFactory()
+
+  $scope.deleteItem = (index) ->
+    $scope.items.splice(index, 1)
+
+app.controller "onSaleCtrl", ($scope, $http, itemFactory, cart) ->
+  $scope.items = itemFactory.query()
+  $scope.new_item = new itemFactory()
+  $scope.cart = cart
 
   $scope.insertCart = (index) ->
     console.log($scope.items[index])

@@ -1,0 +1,22 @@
+.container
+  h1 商品管理
+
+  table
+    tr
+      th 商品名
+      th 単価
+      th
+    tr ng-repeat="item in items"
+      td
+        | {{item.name}}
+      td
+        | ￥{{item.price | number}}
+      td
+        = link_to "削除", "", "ng-click" => "deleteItem($index)"
+    tr
+      td
+        = text_field_tag :name, "", "ng-model" => "new_item.name"
+      td
+        = text_field_tag :price, "", "ng-model" => "new_item.price"
+      td
+        = link_to("登録", "", "ng-click" => "createItem()")
