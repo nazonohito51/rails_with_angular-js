@@ -1,4 +1,38 @@
 .container
   h1 商品一覧
+  | {{items}}
 
-  | this is dashboard html slim. test_value={{test_value}}
+  table
+    tr
+      th 商品名
+      th 単価
+      th
+        | 数量
+      th
+        / 詳細、編集ボタン
+    tr ng-repeat="item in items"
+      td
+        | {{item.name}}
+      td
+        | {{item.price}}
+      td
+        = number_field_tag :quantity, nil, { "ng-model" => "item.quantity" }
+      td
+        = link_to "カートに入れる", "", "ng-click" => "insertCart(item)"
+
+  hr
+
+  h3 商品新規登録
+  table
+    tr
+      th 商品名
+      td
+        = text_field_tag :price, "", "ng-model" => "new_item.name"
+    tr
+      th 単価
+      td
+        = text_field_tag :name, "", "ng-model" => "new_item.price"
+    tr
+      th
+      td
+        = link_to("登録", "", "ng-click" => "createItem()")

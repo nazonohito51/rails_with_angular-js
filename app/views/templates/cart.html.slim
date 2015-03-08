@@ -1,0 +1,34 @@
+div class="container"
+  h1 ショッピングカート
+  | {{cart}}
+
+  table
+    tr
+      th 商品名
+      th 価格
+      th 数量
+      th 計
+      th
+        / 詳細、編集ボタン
+    tr ng-repeat="item in cart"
+      td
+        | {{item.name}}
+      td
+        | {{item.price | currency}}
+      td
+        | {{item.quantity}}
+      td
+        | {{item.price * item.quantity | currency}}
+      td
+        = link_to "カートから削除", "", "ng-click" => "removeCart({{item.id}})"
+        /= link_to "編集", "{{purchase_order_header.links.edit_url}}", :class => "btn btn-primary btn-xs"
+    tr
+      td 合計
+      td
+      td
+      td
+        | {{getAmount() | currency}}
+
+  hr
+
+  = link_to "購入する", "", "ng-click" => "purchaseProceeding()"
