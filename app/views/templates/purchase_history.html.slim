@@ -1,0 +1,27 @@
+.container
+  h1 購入履歴
+
+  .container ng-repeat="purchase_header in purchase_headers"
+    h3 購入日:{{purchase_header.created_at}}
+    .table-responsive
+      table.table.table-striped.table-hover
+        tr
+          th 商品名
+          th 単価
+          th 数量
+          th 計
+        tr ng-repeat="purchase_detail in purchase_header.purchase_details"
+          td
+            | {{purchase_detail.name}}
+          td
+            | ￥{{purchase_detail.price | number}}
+          td
+            | {{purchase_detail.quantity}}
+          td
+            | ￥{{purchase_detail.price * purchase_detail.quantity | number}}
+        tr
+          td 合計
+          td
+          td
+          td
+            | ￥{{purchase_header.amount | number}}

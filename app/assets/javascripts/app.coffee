@@ -13,6 +13,9 @@ app.config ($routeProvider, $locationProvider) ->
   $routeProvider.when "/cart",
     templateUrl: "/templates/cart.html",
     controller: "cartCtrl"
+  $routeProvider.when "/purchase_history",
+    templateUrl: "/templates/purchase_history.html",
+    controller: "purchaseHistoryCtrl"
   $locationProvider.html5Mode(true)
 
 app.config ($httpProvider) ->
@@ -26,6 +29,14 @@ app.factory "itemFactory", ["$resource", ($resource) ->
     {
       update: { method: 'PATCH' },
       query_on_sale: { method: "GET", isArray: true, params: { on_sale: true } }
+    }
+]
+
+app.factory "purchaseHeaderFactory", ["$resource", ($resource) ->
+  return $resource "/api/purchase_headers/:id.json",
+    { id: '@id' },
+    {
+      purchase: { method: "POST" }
     }
 ]
 
@@ -68,17 +79,21 @@ app.controller "onSaleCtrl", ($scope, $http, itemFactory, cart) ->
   $scope.cart = cart
 
   $scope.insertCart = (index) ->
-    console.log($scope.items[index])
     if $scope.items[index].quantity > 0
-      $scope.cart.push($scope.items[index])
+      insert_item = {
+        name: $scope.items[index].name,
+        price: $scope.items[index].price,
+        quantity: $scope.items[index].quantity
+      }
+      $scope.cart.push(insert_item)
+      $scope.items[index].quantity = null
     else
       alert("数量を入力してください。")
 
-app.controller "cartCtrl", ($scope, $http, cart) ->
+app.controller "cartCtrl", ($scope, $http, cart, purchaseHeaderFactory) ->
   $scope.cart = cart
 
   $scope.removeCart = (index) ->
-    console.log($scope.cart[index])
     $scope.cart.splice(index, 1)
 
   $scope.getAmount = ->
@@ -88,5 +103,24 @@ app.controller "cartCtrl", ($scope, $http, cart) ->
     return amount
 
   $scope.purchaseProceeding = ->
-    # TODO: 購入処理
-    alert("実装途中です")
+    purchase_header = new purchaseHeaderFactory()
+    purchase_header.amount = $scope.getAmount()
+#    purchase_header.$purchase(
+#      #{ "items": $scope.cart }
+#      $scope.cart
+#      ,(res)->
+#        alert("購入に成功しました。")
+#      ,(res)->
+#        alert("購入に失敗しました。")
+#    )
+    $.post(
+      "/api/purchase_headers.json",
+      { amount: purchase_header.amount, items: $scope.cart })
+      .done (data) ->
+        alert("購入に成功しました。")
+      .fail () ->
+        alert("購入に失敗しました。")
+    $scope.cart = []
+
+app.controller "purchaseHistoryCtrl", ($scope, $http, purchaseHeaderFactory) ->
+  $scope.purchase_headers = purchaseHeaderFactory.query()

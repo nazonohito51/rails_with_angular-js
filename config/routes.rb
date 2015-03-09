@@ -5,6 +5,7 @@ Rails.application.routes.draw do
 
   namespace :api do
     resources :items
+    resources :purchase_headers
   end
 
   get "/dashboard" => "templates#index"
