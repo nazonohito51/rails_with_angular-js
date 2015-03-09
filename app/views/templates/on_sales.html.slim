@@ -1,19 +1,20 @@
 .container
   h1 掲載商品一覧
 
-  table
-    tr
-      th 商品名
-      th 単価
-      th 数量
-      th
-    tr ng-repeat="item in items"
-      td
-        | {{item.name}}
-      td
-        | ￥{{item.price | number}}
-      td
-        = number_field_tag :quantity, nil, { "ng-model" => "item.quantity" }
-      td
-        = link_to "カートに入れる", "", "ng-click" => "insertCart($index)"
-        /= link_to "編集", "{{purchase_order_header.links.edit_url}}", :class => "btn btn-primary btn-xs"
+  .table-responsive
+    table.table.table-striped.table-hover
+      tr
+        th 商品名
+        th 単価
+        th 数量
+        th
+      tr ng-repeat="item in items"
+        td
+          | {{item.name}}
+        td
+          | ￥{{item.price | number}}
+        td
+          = number_field_tag :quantity, nil, { "ng-model" => "item.quantity" }
+        td
+          = link_to "カートに入れる", "", { "ng-click" => "insertCart($index)", :class => "btn btn-primary btn-xs" }
+          /= link_to "編集", "{{purchase_order_header.links.edit_url}}", :class => "btn btn-primary btn-xs"

@@ -1,26 +1,27 @@
 .container
   h1 商品管理
 
-  table
-    tr
-      th 商品掲載
-      th 商品名
-      th 単価
-      th
-    tr ng-repeat="item in items"
-      td
-        = check_box_tag :on_sale, true, false, { "ng-model" => "item.on_sale", "ng-change" => "changeOnSale($index)" }
-      td
-        | {{item.name}}
-      td
-        | ￥{{item.price | number}}
-      td
-        = link_to "削除", "", "ng-click" => "deleteItem($index)"
-    tr
-      td
-      td
-        = text_field_tag :name, "", "ng-model" => "new_item.name"
-      td
-        = text_field_tag :price, "", "ng-model" => "new_item.price"
-      td
-        = link_to("登録", "", "ng-click" => "createItem()")
+  .table-responsive
+    table.table.table-striped.table-hover
+      tr
+        th 商品掲載
+        th 商品名
+        th 単価
+        th
+      tr ng-repeat="item in items"
+        td
+          = check_box_tag :on_sale, true, false, { "ng-model" => "item.on_sale", "ng-change" => "changeOnSale($index)" }
+        td
+          | {{item.name}}
+        td
+          | ￥{{item.price | number}}
+        td
+          = link_to "削除", "", { "ng-click" => "deleteItem($index)", :class => "btn btn-danger btn-xs" }
+      tr
+        td
+        td
+          = text_field_tag :name, "", "ng-model" => "new_item.name"
+        td
+          = text_field_tag :price, "", "ng-model" => "new_item.price"
+        td
+          = link_to "登録", "", { "ng-click" => "createItem()", :class => "btn btn-primary btn-xs" }
