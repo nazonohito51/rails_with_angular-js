@@ -14,6 +14,6 @@
         td
           | ￥{{item.price | number}}
         td
-          = number_field_tag :quantity, nil, { "ng-model" => "item.quantity" }
+          = number_field_tag :quantity, nil, { "ng-model" => "item.quantity", :class => "form-control" }
         td
           = link_to "カートに入れる", "", { "ng-click" => "insertCart($index)", :class => "btn btn-primary btn-xs" }

@@ -20,8 +20,8 @@
       tr
         td
         td
-          = text_field_tag :name, "", "ng-model" => "new_item.name"
+          = text_field_tag :name, "", { "ng-model" => "new_item.name", :class => "form-control" }
         td
-          = text_field_tag :price, "", "ng-model" => "new_item.price"
+          = text_field_tag :price, "", { "ng-model" => "new_item.price", :class => "form-control" }
         td
           = link_to "登録", "", { "ng-click" => "createItem()", :class => "btn btn-primary btn-xs" }
