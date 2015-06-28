@@ -5,7 +5,7 @@ module.exports = function(config) {
   config.set({
 
     // base path that will be used to resolve all patterns (eg. files, exclude)
-    basePath: '',
+    basePath: '../../../',
 
 
     // frameworks to use
@@ -15,19 +15,28 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      '../../../app/assets/javascripts/*.js',
-      '../../../spec/javascript/angular/*Spec.js'
+      'vendor/assets/javascripts/angular.min.js',
+      'vendor/assets/javascripts/angular-route.min.js',
+      'vendor/assets/javascripts/angular-resource.min.js',
+      'vendor/assets/javascripts/angular-mocks.js',
+      'vendor/assets/javascripts/*.js',
+      'app/assets/javascripts/application.js',
+      'app/assets/javascripts/*.coffee',
+      'spec/javascript/angular/*.coffee'
     ],
 
 
     // list of files to exclude
     exclude: [
+      'vendor/assets/javascripts/bootstrap.min.js'
     ],
 
 
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
+      'app/assets/javascripts/*.coffee': ['coffee'],
+      'spec/javascript/angular/*.coffee': ['coffee']
     },
 
 
